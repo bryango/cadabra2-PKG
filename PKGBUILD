@@ -15,15 +15,15 @@ depends=(
   'jsoncpp'
   'mathjax'
   'pcre'
-  'python-matplotlib'
-  'python-sympy'
   'texlive-core'
 )
 makedepends=(
   'boost'
   'cmake'
+  'python-matplotlib'
+  'python-sympy'
 )
-source=("https://github.com/kpeeters/cadabra2/archive/${pkgver}.tar.gz")
+source=("https://codeload.github.com/kpeeters/cadabra2/tar.gz/${pkgver}")
 md5sums=('95feb70c09aca94a2149adbe4e754f4f')
 
 build() {
