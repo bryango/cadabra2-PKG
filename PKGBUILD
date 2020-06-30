@@ -2,7 +2,8 @@
 # Contributor: Bryan Lai <bryanlais@gmail.com>
 
 pkgname='cadabra2-git'
-pkgver=2.3.0.r0.811f754
+pkgver=2.3.0.r17.97bf651
+_base=2.3.0
 _since=2.2.8  # shallow clone since this version
 pkgrel=1
 pkgdesc="A computer algebra system (pre-release version) designed specifically for the solution of problems encountered in field theory."
@@ -33,10 +34,16 @@ source=()
 md5sums=()
 
 prepare() {
-  cd "$srcdir/${pkgname%-git}" \
-    && git fetch \
-  || cd "$srcdir" \
-    && git clone --shallow-exclude="$_since" https://github.com/kpeeters/cadabra2.git
+  if \
+    cd "$srcdir/${pkgname%-git}" \
+    && git pull --rebase
+  then : ; else
+    cd "$srcdir" \
+    && git clone --shallow-exclude="$_since" https://github.com/kpeeters/cadabra2.git \
+    && cd cadabra2
+  fi
+
+  # git checkout "$_base"
 }
 
 pkgver() {
@@ -46,6 +53,7 @@ pkgver() {
 
 build() {
   cd "$srcdir/${pkgname%-git}"
+  rm -rf build
   mkdir -p build
   cd build
   cmake .. \
